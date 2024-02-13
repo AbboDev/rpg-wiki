@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "pre-commit": "lint-staged",
+    "commit": "cz",
     "release": "standard-version",
     "prepare": "husky install"
   },
@@ -23,6 +24,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
@@ -34,5 +37,10 @@
     "standard-version": "^9.5.0",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
