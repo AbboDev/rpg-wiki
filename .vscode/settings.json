@@ -3,5 +3,10 @@
     "activityBar.background": "#280E8C",
     "titleBar.activeBackground": "#3814C3",
     "titleBar.activeForeground": "#FAF9FE"
-  }
+  },
+  "cSpell.words": [
+    "commitlint",
+    "Parens",
+    "tailwindcss"
+  ]
 }
