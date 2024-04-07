@@ -1,6 +1,13 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+import { parseArgs } from 'node:util';
+
+const options = {
+  refresh: {
+    type: 'boolean',
+  },
+} as const;
 
 const prisma = new PrismaClient();
 
@@ -9,11 +16,11 @@ const randomIndex = <Type>(array: Type[]) => {
 };
 
 const randomFromInterval = (max: number, min?: number) => {
-  min = min || 0
+  min = min || 0;
 
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 const getExtension = (): string => {
   const imageExtensions = ['jpg', 'jpeg', 'gif', 'png', 'webp'];
@@ -65,7 +72,20 @@ const generatePosts = (
 };
 
 const seed = async () => {
-  console.log('%c' + 'Seed is starting!', 'color: Green');
+  const {
+    values: { refresh },
+  } = parseArgs({ options });
+  console.log('Seed is starting!');
+
+  if (refresh) {
+    console.log('Clean is starting!');
+    const deletePosts = prisma.post.deleteMany();
+    const deleteUsers = prisma.user.deleteMany();
+
+    await prisma.$transaction([deletePosts, deleteUsers]);
+    console.log('Clean completed!');
+  }
+
   const users = generateUsers(10);
 
   for (let userData of users) {
@@ -76,7 +96,7 @@ const seed = async () => {
     const posts = generatePosts(postCount, user.id);
     await prisma.post.createMany({ data: posts });
 
-    console.log(`Create ${postCount} posts for user ${user.name}`, 'color: green');
+    console.log(`Create ${postCount} posts for user ${user.name}`);
   }
 
   console.log('Seed data completed!');
