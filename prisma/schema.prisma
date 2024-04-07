@@ -1,11 +1,11 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
@@ -36,8 +36,8 @@ model Post {
   characters Character[]
 
   // The user who created the model
-  author     User?       @relation(fields: [authorId], references: [id])
-  authorId   String?
+  author   User?   @relation(fields: [authorId], references: [id])
+  authorId String?
 
   // Common Metadata
   published Boolean   @default(false)
@@ -53,7 +53,7 @@ model Map {
   image   String  @db.Char(46) // SHA1 lenght of 40 + 1 char for dot + max 5 chars for extensions
 
   markers MapMarker[] @relation("MarkerMapParent")
-  parent  MapMarker[]  @relation("MarkerMapChild")
+  parent  MapMarker[] @relation("MarkerMapChild")
 
   // The user who created the model
   author   User?   @relation(fields: [authorId], references: [id])
@@ -67,18 +67,18 @@ model Map {
 }
 
 model MapMarker {
-  id         String  @id @default(cuid())
-  title      String
-  content    String?
-  x          Float
-  y          Float
+  id      String  @id @default(cuid())
+  title   String
+  content String?
+  x       Float
+  y       Float
 
   // A marker can lead to another map
-  mapChild   Map?    @relation(name: "MarkerMapChild", fields: [mapChildId], references: [id])
-  mapChildId String
+  mapChild   Map?   @relation(name: "MarkerMapChild", fields: [mapChildId], references: [id])
+  mapChildId String?
 
-  map      Map     @relation(name: "MarkerMapParent", fields: [mapId], references: [id])
-  mapId    String
+  map   Map    @relation(name: "MarkerMapParent", fields: [mapId], references: [id])
+  mapId String
 
   // The user who created the model
   author   User?   @relation(fields: [authorId], references: [id])
@@ -98,8 +98,8 @@ model Character {
   stats   Json?
   image   String  @db.Char(46) // SHA1 lenght of 40 + 1 char for dot + max 5 chars for extensions
 
-  post     Post?   @relation(fields: [postId], references: [id])
-  postId   String?
+  post   Post?   @relation(fields: [postId], references: [id])
+  postId String?
 
   // The user who created the model
   author   User?   @relation(fields: [authorId], references: [id])
