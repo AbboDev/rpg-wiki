@@ -3,14 +3,6 @@ import { faker } from '@faker-js/faker';
 import crypto from 'node:crypto';
 import { parseArgs } from 'node:util';
 
-const options = {
-  refresh: {
-    type: 'boolean',
-  },
-} as const;
-
-const prisma = new PrismaClient();
-
 const randomIndex = <Type>(array: Type[]) => {
   return Math.floor(Math.random() * array.length);
 };
@@ -21,6 +13,26 @@ const randomFromInterval = (max: number, min?: number) => {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+const defaultUserCount = randomFromInterval(12, 1);
+const defaultPostCount = randomFromInterval(10);
+
+const options = {
+  refresh: {
+    type: 'boolean',
+  },
+  user: {
+    type: 'string',
+  },
+  post: {
+    type: 'string',
+  },
+  map: {
+    type: 'string',
+  },
+} as const;
+
+const prisma = new PrismaClient();
 
 const getExtension = (): string => {
   const imageExtensions = ['jpg', 'jpeg', 'gif', 'png', 'webp'];
@@ -73,9 +85,12 @@ const generatePosts = (
 
 const seed = async () => {
   const {
-    values: { refresh },
+    values: { refresh, user, post },
   } = parseArgs({ options });
   console.log('Seed is starting!');
+
+  const userCount = user && !isNaN(+user) ? Number(user) : defaultUserCount;
+  const postCount = post && !isNaN(+post) ? Number(post) : defaultPostCount;
 
   if (refresh) {
     console.log('Clean is starting!');
@@ -86,17 +101,16 @@ const seed = async () => {
     console.log('Clean completed!');
   }
 
-  const users = generateUsers(10);
+  const users = generateUsers(userCount);
 
-  for (let userData of users) {
+  for (const userData of users) {
     const user = await prisma.user.create({ data: userData });
     console.log(`User ${user.name} has been created`);
 
-    const postCount = randomFromInterval(10);
     const posts = generatePosts(postCount, user.id);
     await prisma.post.createMany({ data: posts });
 
-    console.log(`Create ${postCount} posts for user ${user.name}`);
+    console.log(`Created ${postCount} posts for user ${user.name}`);
   }
 
   console.log('Seed data completed!');
