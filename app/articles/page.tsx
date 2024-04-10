@@ -1,11 +1,29 @@
 import prisma from '@/src/lib/prisma';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Pagination } from '@/src/components/Pagination';
 
-export default async function Articles() {
-  const articles = await prisma.post.findMany({
-    include: { author: true },
-  });
+export default async function Articles({
+  searchParams,
+}: {
+  searchParams?: {
+    page?: string;
+  };
+}) {
+  const LIMIT = 3;
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const [count, articles] = await prisma.$transaction([
+    prisma.post.count(),
+    prisma.post.findMany({
+      include: { author: true },
+      take: LIMIT,
+      skip: (currentPage - 1) * LIMIT,
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    }),
+  ]);
 
   const headingClassName = 'py-3 px-2';
 
@@ -71,6 +89,12 @@ export default async function Articles() {
         </tbody>
         <tfoot>{<TableHeading />}</tfoot>
       </table>
+
+      <nav className="text-center">
+        <span className="mb-2 block">Posts found: {count}</span>
+
+        <Pagination count={count} perPage={LIMIT} />
+      </nav>
 
       <Link
         href="/"
