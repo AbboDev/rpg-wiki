@@ -17,11 +17,11 @@ export default async function Articles() {
         <thead>{<TableHeading />}</thead>
         <tbody>
           {articles.map((article) => (
-            <tr key={article.id} className='odd:bg-gray-800 bg-gray-700'>
+            <tr key={article.id} className="odd:bg-gray-800 bg-gray-700">
               <td className={headingClassName}>
                 <Image
                   className="rounded object-cover w-20 h-20"
-                  src="https://picsum.photos/200/300"
+                  src={`https://placehold.co/150/png?font=raleway&text=${article.id}`}
                   width={150}
                   height={150}
                   alt={article.image}
