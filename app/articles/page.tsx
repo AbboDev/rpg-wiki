@@ -49,7 +49,7 @@ export default async function Articles({
               <td className={headingClassName}>{article.content?.length}</td>
               <td className={headingClassName}>
                 {!article.author ? (
-                  'Autore ignoto'
+                  'Unknown author'
                 ) : (
                   <Link
                     href={`/users/${article.author.id}`}
