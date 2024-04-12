@@ -12,6 +12,7 @@ import {
 import { Skeleton as UISkeleton } from '@/components/ui/skeleton';
 import { RiEyeLine, RiEditLine, RiDeleteBin2Line } from 'react-icons/ri';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   limit: number;
@@ -76,24 +77,23 @@ export async function Table({ limit, currentPage }: Props) {
               </span>
 
               <div className="inline-flex items-baseline gap-1">
-                <Link
-                  href={`/articles/${article.id}`}
-                  className="hover:text-gray-300 border-white hover:border-gray-300 transition-colors p-1 border rounded text-center"
-                >
-                  <RiEyeLine />
-                </Link>
-                <Link
-                  href={`/articles/${article.id}/edit`}
-                  className="hover:text-gray-300 border-white hover:border-gray-300 transition-colors p-1 border rounded text-center"
-                >
-                  <RiEditLine />
-                </Link>
-                <Link
-                  href={`/articles/${article.id}/delete`}
-                  className="text-red-500 hover:text-red-800 border-red-500 hover:border-red-800 transition-colors p-1 border rounded text-center"
-                >
-                  <RiDeleteBin2Line />
-                </Link>
+                <Button asChild size="icon">
+                  <Link href={`/articles/${article.id}`}>
+                    <RiEyeLine className="size-4" />
+                  </Link>
+                </Button>
+
+                <Button asChild variant="secondary" size="icon">
+                  <Link href={`/articles/${article.id}/edit`}>
+                    <RiEditLine className="size-4" />
+                  </Link>
+                </Button>
+
+                <Button asChild variant="destructive" size="icon">
+                  <Link href={`/articles/${article.id}/delete`}>
+                    <RiDeleteBin2Line className="size-4" />
+                  </Link>
+                </Button>
               </div>
             </TableCell>
           </TableRow>
@@ -139,9 +139,9 @@ export function Skeleton({ limit: length }: SkeletonProps) {
             <UISkeleton className="h-6 w-20 rounded block mx-auto mb-1" />
 
             <div className="inline-flex items-baseline gap-1">
-              <UISkeleton className="size-6 border rounded block" />
-              <UISkeleton className="size-6 border rounded block" />
-              <UISkeleton className="size-6 border rounded block" />
+              <UISkeleton className="size-10 rounded block" />
+              <UISkeleton className="size-10 rounded block" />
+              <UISkeleton className="size-10 rounded block" />
             </div>
           </TableCell>
         </TableRow>
