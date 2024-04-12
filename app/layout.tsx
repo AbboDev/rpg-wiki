@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Shippori_Mincho as FontSerif } from 'next/font/google';
+import { Fraunces as FontSerif } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
 import './globals.css';
 
 const fontSerif = FontSerif({
-  weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-serif',
 });
