@@ -1,10 +1,7 @@
 import prisma from '@/lib/prisma';
 import { HomeButton } from '@/components/HomeButton';
 import { Pagination } from '@/components/Pagination';
-import {
-  Articles as ArticlesTable,
-  Skeleton,
-} from '@/components/Table/Articles';
+import { Table, Skeleton } from '@/components/Articles/List/Table';
 import { Suspense } from 'react';
 import { Heading } from '@/components/Heading';
 
@@ -25,7 +22,7 @@ export default async function Articles({
       <Heading as="h1">All Articles</Heading>
 
       <Suspense key={currentPage} fallback={<Skeleton limit={LIMIT} />}>
-        <ArticlesTable limit={LIMIT} currentPage={currentPage} />
+        <Table limit={LIMIT} currentPage={currentPage} />
       </Suspense>
 
       <nav className="text-center">
