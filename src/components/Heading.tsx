@@ -7,7 +7,7 @@ interface Props extends ComponentProps<HeadingTag> {
 }
 
 export function Heading({ as: Tag = 'h1', className, ...otherProps }: Props) {
-  let defaultClassName = `font-semibold ${className}`;
+  let defaultClassName = `font-semibold ${className || ''}`;
 
   switch (Tag) {
     case 'h1':
