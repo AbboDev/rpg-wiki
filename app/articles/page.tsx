@@ -18,20 +18,22 @@ export default async function Articles({
   const count = await prisma.post.count();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-4">
-      <Heading as="h1">All Articles</Heading>
+    <main className="flex flex-col items-center justify-start gap-4 text-start">
+      <div className="container flex flex-col items-center gap-4">
+        <Heading as="h1">All Articles</Heading>
 
-      <Suspense key={currentPage} fallback={<Skeleton limit={LIMIT} />}>
-        <Table limit={LIMIT} currentPage={currentPage} />
-      </Suspense>
+        <Suspense key={currentPage} fallback={<Skeleton limit={LIMIT} />}>
+          <Table limit={LIMIT} currentPage={currentPage} />
+        </Suspense>
 
-      <nav className="text-center">
-        <span className="mb-2 block">Posts found: {count}</span>
+        <nav className="text-center">
+          <span className="mb-2 block">Posts found: {count}</span>
 
-        <Pagination count={count} perPage={LIMIT} offset={4} />
-      </nav>
+          <Pagination count={count} perPage={LIMIT} offset={4} />
+        </nav>
 
-      <HomeButton />
+        <HomeButton />
+      </div>
     </main>
   );
 }
