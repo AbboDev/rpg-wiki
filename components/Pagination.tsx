@@ -46,7 +46,7 @@ export function Pagination({ count, perPage, offset }: Props) {
       }
 
       const nextPage = currentPage + index;
-      if (nextPage < length) {
+      if (nextPage <= length) {
         right.push(nextPage);
       }
     }
@@ -76,18 +76,23 @@ export function Pagination({ count, perPage, offset }: Props) {
           ))
         ) : (
           <>
-            {left[0] !== 1 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
+            {left.length > 0 && (
+              <>
+                {left[0] !== 1 && (
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )}
+                {left.map((i) => (
+                  <PaginationItem key={i}>
+                    <PaginationLink href={`${pathname}?${appendPage(i)}`}>
+                      {i}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+              </>
             )}
-            {left.map((i) => (
-              <PaginationItem key={i}>
-                <PaginationLink href={`${pathname}?${appendPage(i)}`}>
-                  {i}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+
             <PaginationItem>
               <PaginationLink
                 href={`${pathname}?${appendPage(currentPage)}`}
@@ -96,17 +101,22 @@ export function Pagination({ count, perPage, offset }: Props) {
                 {currentPage}
               </PaginationLink>
             </PaginationItem>
-            {right.map((i) => (
-              <PaginationItem key={i}>
-                <PaginationLink href={`${pathname}?${appendPage(i)}`}>
-                  {i}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            {right[right.length - 1] !== length - 1 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
+
+            {right.length > 0 && (
+              <>
+                {right.map((i) => (
+                  <PaginationItem key={i}>
+                    <PaginationLink href={`${pathname}?${appendPage(i)}`}>
+                      {i}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                {right[right.length - 1] !== length && (
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )}
+              </>
             )}
           </>
         )}
