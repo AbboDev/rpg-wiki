@@ -1,18 +1,21 @@
 import prisma from '@/lib/prisma';
-import { HomeButton } from '@/components/HomeButton';
-import { Pagination } from '@/components/Pagination';
-import { Table, Skeleton } from '@/components/Articles/List/Table';
 import { Suspense } from 'react';
-import { Heading } from '@/components/Heading';
 
-export default async function Articles({
-  searchParams,
-}: {
+import { HomeButton } from '@/components/HomeButton';
+import { Pagination } from '@/components/Pagination/Pagination';
+import { Table, Skeleton } from '@/components/Articles/List/Table';
+import { Heading } from '@/components/Heading';
+import { Select } from '@/components/Pagination/Select';
+
+interface Props {
   searchParams?: {
     page?: string;
+    count?: string;
   };
-}) {
-  const LIMIT = 3;
+}
+
+export default async function Articles({ searchParams }: Props) {
+  const limit = Number(searchParams?.count) || 10;
   const currentPage = Number(searchParams?.page) || 1;
 
   const count = await prisma.post.count();
@@ -22,14 +25,18 @@ export default async function Articles({
       <div className="container flex flex-col items-center gap-4">
         <Heading as="h1">All Articles</Heading>
 
-        <Suspense key={currentPage} fallback={<Skeleton limit={LIMIT} />}>
-          <Table limit={LIMIT} currentPage={currentPage} />
+        <Suspense key={currentPage} fallback={<Skeleton limit={limit} />}>
+          <Table limit={limit} currentPage={currentPage} />
         </Suspense>
 
-        <nav className="text-center">
-          <span className="mb-2 block">Posts found: {count}</span>
+        <nav className="text-center space-y-1">
+          <div className="flex items-center justify-center space-x-2">
+            <span className="block">Posts found: {count}</span>
 
-          <Pagination count={count} perPage={LIMIT} offset={4} />
+            <Select value={limit.toString()} />
+          </div>
+
+          <Pagination count={count} perPage={limit} offset={4} />
         </nav>
 
         <HomeButton />
