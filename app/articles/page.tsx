@@ -28,7 +28,7 @@ export default async function Articles({
       <nav className="text-center">
         <span className="mb-2 block">Posts found: {count}</span>
 
-        <Pagination count={count} perPage={LIMIT} />
+        <Pagination count={count} perPage={LIMIT} offset={4} />
       </nav>
 
       <HomeButton />
