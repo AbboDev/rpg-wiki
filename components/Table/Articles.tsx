@@ -1,7 +1,7 @@
-import prisma from '@/src/lib/prisma';
+import prisma from '@/lib/prisma';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Table, HEADING_CLASS_NAME } from '@/src/components/Table';
+import { Table, HEADING_CLASS_NAME } from '@/components/Table';
 import {
   RiEyeLine ,
   RiEditLine,

@@ -1,12 +1,12 @@
-import prisma from '@/src/lib/prisma';
+import prisma from '@/lib/prisma';
 import Link from 'next/link';
-import { Pagination } from '@/src/components/Pagination';
+import { Pagination } from '@/components/Pagination';
 import {
   Articles as ArticlesTable,
   Skeleton,
-} from '@/src/components/Table/Articles';
+} from '@/components/Table/Articles';
 import { Suspense } from 'react';
-import { Heading } from '@/src/components/Heading';
+import { Heading } from '@/components/Heading';
 
 export default async function Articles({
   searchParams,

@@ -1,4 +1,4 @@
-import prisma from '@/src/lib/prisma';
+import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -7,7 +7,7 @@ import {
   RiDeleteBin2Line,
   RiArrowLeftSLine,
 } from 'react-icons/ri';
-import { Checkbox } from '@/src/components/Checkbox';
+import { Checkbox } from '@/components/Checkbox';
 
 type Props = {
   params: { article: string };

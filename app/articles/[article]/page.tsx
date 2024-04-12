@@ -1,5 +1,5 @@
-import prisma from '@/src/lib/prisma';
-import { Heading } from '@/src/components/Heading';
+import prisma from '@/lib/prisma';
+import { Heading } from '@/components/Heading';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
