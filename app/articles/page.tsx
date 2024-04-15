@@ -6,6 +6,7 @@ import { Pagination } from '@/components/Pagination/Pagination';
 import { Table, Skeleton } from '@/components/Articles/List/Table';
 import { Heading } from '@/components/Heading';
 import { Select } from '@/components/Pagination/Select';
+import { notFound } from 'next/navigation';
 
 interface Props {
   searchParams?: {
@@ -19,6 +20,10 @@ export default async function Articles({ searchParams }: Props) {
   const currentPage = Number(searchParams?.page) || 1;
 
   const count = await prisma.post.count();
+
+  if (limit * (currentPage - 1) > count) {
+    notFound();
+  }
 
   return (
     <main className="flex flex-col items-center justify-start gap-4 text-start">
