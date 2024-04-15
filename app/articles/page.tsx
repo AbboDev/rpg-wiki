@@ -1,45 +1,46 @@
-import prisma from '@/src/lib/prisma';
-import Link from 'next/link';
-import { Pagination } from '@/src/components/Pagination';
-import {
-  Articles as ArticlesTable,
-  Skeleton,
-} from '@/src/components/Table/Articles';
+import prisma from '@/lib/prisma';
 import { Suspense } from 'react';
-import { Heading } from '@/src/components/Heading';
 
-export default async function Articles({
-  searchParams,
-}: {
+import { HomeButton } from '@/components/HomeButton';
+import { Pagination } from '@/components/Pagination/Pagination';
+import { Table, Skeleton } from '@/components/Articles/List/Table';
+import { Heading } from '@/components/Heading';
+import { Select } from '@/components/Pagination/Select';
+
+interface Props {
   searchParams?: {
     page?: string;
+    count?: string;
   };
-}) {
-  const LIMIT = 3;
+}
+
+export default async function Articles({ searchParams }: Props) {
+  const limit = Number(searchParams?.count) || 10;
   const currentPage = Number(searchParams?.page) || 1;
 
   const count = await prisma.post.count();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-4">
-      <Heading as="h1">All Articles</Heading>
+    <main className="flex flex-col items-center justify-start gap-4 text-start">
+      <div className="container flex flex-col items-center gap-4">
+        <Heading as="h1">All Articles</Heading>
 
-      <Suspense key={currentPage} fallback={<Skeleton limit={LIMIT} />}>
-        <ArticlesTable limit={LIMIT} currentPage={currentPage} />
-      </Suspense>
+        <Suspense key={currentPage} fallback={<Skeleton limit={limit} />}>
+          <Table limit={limit} currentPage={currentPage} />
+        </Suspense>
 
-      <nav className="text-center">
-        <span className="mb-2 block">Posts found: {count}</span>
+        <nav className="text-center space-y-1">
+          <div className="flex items-center justify-center space-x-2">
+            <span className="block">Posts found: {count}</span>
 
-        <Pagination count={count} perPage={LIMIT} />
-      </nav>
+            <Select value={limit.toString()} />
+          </div>
 
-      <Link
-        href="/"
-        className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-      >
-        Back to homepage
-      </Link>
+          <Pagination count={count} perPage={limit} offset={4} />
+        </nav>
+
+        <HomeButton />
+      </div>
     </main>
   );
 }

@@ -1,13 +1,14 @@
-import prisma from '@/src/lib/prisma';
+import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
-  RiHome2Line,
-  RiEditLine,
+  RiEyeLine,
   RiDeleteBin2Line,
   RiArrowLeftSLine,
 } from 'react-icons/ri';
-import { Checkbox } from '@/src/components/Checkbox';
+import { Checkbox } from '@/components/Checkbox';
+import { HomeButton } from '@/components/HomeButton';
+import { Button } from '@/components/ui/button';
 
 type Props = {
   params: { article: string };
@@ -36,31 +37,28 @@ export default async function EditArticle({ params }: Props) {
     <main className="flex flex-col items-center justify-start">
       <form className="container flex flex-col items-center justify-start min-h-screen p-3 lg:p-24 gap-4">
         <div className="flex justify-start gap-2">
-          <Link
-            href="/articles"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
-            <RiHome2Line className="inline align-middle" /> Back to homepage
-          </Link>
-          <Link
-            href="/articles"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
-            <RiArrowLeftSLine className="inline align-middle" /> Back to
-            Articles
-          </Link>
-          <Link
-            href={`/articles/${article.id}`}
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
-            <RiEditLine className="inline align-middle" /> View
-          </Link>{' '}
-          <Link
-            href={`/articles/${article.id}/delete`}
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
-            <RiDeleteBin2Line className="inline align-middle" /> Delete
-          </Link>
+          <HomeButton />
+
+          <Button asChild>
+            <Link href="/articles" className="gap-1">
+              <RiArrowLeftSLine className="inline-block" />
+              <span>Back to Articles</span>
+            </Link>
+          </Button>
+
+          <Button asChild>
+            <Link href={`/articles/${article.id}`} className="gap-1">
+              <RiEyeLine className="inline-block" />
+              <span>View</span>
+            </Link>
+          </Button>
+
+          <Button asChild>
+            <Link href={`/articles/${article.id}/delete`} className="gap-1">
+              <RiDeleteBin2Line className="inline-block" />
+              <span>Delete</span>
+            </Link>
+          </Button>
         </div>
 
         <span className="text-xs text-gray-300 dark:text-neutral-500">
