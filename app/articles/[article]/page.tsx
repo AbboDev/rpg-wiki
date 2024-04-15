@@ -1,8 +1,8 @@
 import prisma from '@/lib/prisma';
-import { Heading } from '@/components/Heading';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { RiEditLine, RiDeleteBin2Line, RiArrowLeftSLine } from 'react-icons/ri';
+import { Heading } from '@/components/Heading';
 import { HomeButton } from '@/components/HomeButton';
 import { Button } from '@/components/ui/button';
 
@@ -28,36 +28,42 @@ export default async function Article({ params }: Props) {
   }
 
   return (
-    <main className="flex flex-col items-center justify-start">
-      <section className="container flex flex-col items-center justify-start min-h-screen p-3 lg:p-24 gap-4">
-        <div className="flex justify-start gap-2">
+    <main className="flex flex-col items-center justify-start gap-4 text-start">
+      <section className="container space-y-4">
+        <div className="flex justify-center gap-2 mx-auto">
           <HomeButton />
 
           <Button asChild>
-            <Link href="/articles" className='gap-1'>
+            <Link href="/articles" className="gap-1">
               <RiArrowLeftSLine className="inline-block" />
               <span>Back to Articles</span>
             </Link>
           </Button>
 
           <Button asChild>
-            <Link href={`/articles/${article.id}/edit`} className='gap-1'>
+            <Link href={`/articles/${article.id}/edit`} className="gap-1">
               <RiEditLine className="inline-block" />
               <span>Edit</span>
             </Link>
           </Button>
 
           <Button asChild>
-            <Link href={`/articles/${article.id}/delete`} className='gap-1'>
+            <Link href={`/articles/${article.id}/delete`} className="gap-1">
               <RiDeleteBin2Line className="inline-block" />
               <span>Delete</span>
             </Link>
           </Button>
         </div>
+      </section>
 
-        <Heading as="h1">{article.title}</Heading>
+      <section className="container space-y-4">
+        <Heading as="h1" className="block w-full">
+          {article.title}
+        </Heading>
 
-        <p className="self-stretch">{article.content}</p>
+        <p className="block w-full whitespace-pre-line">
+          {article.content}
+        </p>
 
         <div className="flex flex-wrap p-2 sm:px-0 justify-start mt-auto w-full text-start sm:text-center border rounded border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30">
           <span className={INFO_CLASS_NAME}>
@@ -102,8 +108,6 @@ export default async function Article({ params }: Props) {
               </Link>
             )}
           </span>
-
-          <span className={INFO_CLASS_NAME}>#{article.id}</span>
         </div>
       </section>
     </main>
