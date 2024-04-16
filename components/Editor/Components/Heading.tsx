@@ -1,12 +1,13 @@
 import type { ComponentConfig } from "@measured/puck";
+import { Heading as BaseHeading } from "@/components/Heading";
 
-export const ParagraphBlock: ComponentConfig = {
+export const Heading: ComponentConfig = {
   fields: {
     children: {
       type: 'text',
     },
   },
   render: ({ children }) => {
-    return <p>{children}</p>;
+    return <BaseHeading>{children}</BaseHeading>;
   },
 };

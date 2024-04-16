@@ -1,3 +1,3 @@
 export * from './Columns';
-export * from './HeadingBlock';
-export * from './ParagraphBlock';
+export * from './Heading';
+export * from './Paragraph';
