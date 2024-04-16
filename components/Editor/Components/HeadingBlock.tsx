@@ -1,4 +1,5 @@
 import type { ComponentConfig } from "@measured/puck";
+import { Heading } from "@/components/Heading";
 
 export const HeadingBlock: ComponentConfig = {
   fields: {
@@ -7,6 +8,6 @@ export const HeadingBlock: ComponentConfig = {
     },
   },
   render: ({ children }) => {
-    return <h1>{children}</h1>;
+    return <Heading>{children}</Heading>;
   },
 };
