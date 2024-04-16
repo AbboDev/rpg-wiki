@@ -1,4 +1,4 @@
-import type { ComponentConfig } from "@measured/puck";
+import type { ComponentConfig } from '@measured/puck';
 
 export const Paragraph: ComponentConfig = {
   fields: {
@@ -7,6 +7,6 @@ export const Paragraph: ComponentConfig = {
     },
   },
   render: ({ children }) => {
-    return <p>{children}</p>;
+    return <p className="whitespace-pre-line">{children}</p>;
   },
 };
