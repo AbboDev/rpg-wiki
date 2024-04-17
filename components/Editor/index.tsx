@@ -5,16 +5,32 @@ import '@measured/puck/puck.css';
 import { ComponentProps } from 'react';
 import * as components from './Components';
 import { Heading } from '@/components/Heading';
+import { Date as DateField } from './Fields/Date';
 
 interface Props extends Omit<ComponentProps<typeof Puck.Puck>, 'config'> {}
 
-const config: Puck.Config = {
+type RootProps = {
+  title?: string;
+  description?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+const config: Puck.Config<{}, RootProps> = {
   components,
 
   root: {
     fields: {
       title: { type: 'text' },
       description: { type: 'textarea' },
+      createdAt: {
+        ...DateField,
+        label: 'Created at',
+      },
+      updatedAt: {
+        ...DateField,
+        label: 'Last update',
+      },
     },
     render: ({ children, description, title }) => {
       return (
