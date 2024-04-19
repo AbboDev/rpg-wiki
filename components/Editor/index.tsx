@@ -6,6 +6,8 @@ import { ComponentProps } from 'react';
 import * as components from './Components';
 import { Heading } from '@/components/Heading';
 import { Date as DateField } from './Fields/Date';
+import headingAnalyzer from '@measured/puck-plugin-heading-analyzer';
+import '@measured/puck-plugin-heading-analyzer/dist/index.css';
 
 interface Props extends Omit<ComponentProps<typeof Puck.Puck>, 'config'> {}
 
@@ -48,5 +50,7 @@ const config: Puck.Config<{}, RootProps> = {
 
 // Render Puck editor
 export function Editor({ ...editorProps }: Props) {
-  return <Puck.Puck {...editorProps} config={config} />;
+  return (
+    <Puck.Puck {...editorProps} config={config} plugins={[headingAnalyzer]} />
+  );
 }
