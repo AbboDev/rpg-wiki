@@ -8,6 +8,6 @@ export const Heading: ComponentConfig = {
     },
   },
   render: ({ children }) => {
-    return <BaseHeading>{children}</BaseHeading>;
+    return <BaseHeading rank={2}>{children}</BaseHeading>;
   },
 };

@@ -1,13 +1,15 @@
-import { ElementType, ComponentProps } from 'react';
+import { forwardRef, HTMLAttributes } from 'react';
 
-type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-
-interface Props extends ComponentProps<HeadingTag> {
-  as?: ElementType<any, HeadingTag>;
+export interface Props extends HTMLAttributes<HTMLHeadingElement> {
+  rank?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-export function Heading({ as: Tag = 'h1', className, ...otherProps }: Props) {
+const Heading = forwardRef<HTMLHeadingElement, Props>(function Heading(
+  { rank, className, ...otherProps },
+  ref,
+) {
   let defaultClassName = `font-semibold ${className || ''}`;
+  const Tag: any = rank ? `h${rank}` : 'span';
 
   switch (Tag) {
     case 'h1':
@@ -31,5 +33,7 @@ export function Heading({ as: Tag = 'h1', className, ...otherProps }: Props) {
       break;
   }
 
-  return <Tag className={defaultClassName} {...otherProps} />;
-}
+  return <Tag className={defaultClassName} {...otherProps} ref={ref} />;
+});
+
+export { Heading };

@@ -35,7 +35,7 @@ const config: Puck.Config<{}, RootProps> = {
     render: ({ children, description, title }) => {
       return (
         <section className="space-y-2">
-          <Heading>{title}</Heading>
+          <Heading rank={1}>{title}</Heading>
 
           {description && <p className="whitespace-pre-line">{description}</p>}
 

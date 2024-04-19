@@ -57,13 +57,11 @@ export default async function Article({ params }: Props) {
       </section>
 
       <section className="container space-y-4">
-        <Heading as="h1" className="block w-full">
+        <Heading rank={1} className="block w-full">
           {article.title}
         </Heading>
 
-        <p className="block w-full whitespace-pre-line">
-          {article.content}
-        </p>
+        <p className="block w-full whitespace-pre-line">{article.content}</p>
 
         <div className="flex flex-wrap p-2 sm:px-0 justify-start mt-auto w-full text-start sm:text-center border rounded border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30">
           <span className={INFO_CLASS_NAME}>
