@@ -26,6 +26,8 @@ export default async function EditArticle({ params }: Props) {
     content: [],
     root: {
       props: {
+        createdAt: article.createdAt,
+        updatedAt: article.updatedAt,
         description: article.content,
         title: article.title,
       },
