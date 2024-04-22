@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { signIn } from '@/src/lib/auth';
 
 export default function Home() {
   return (
@@ -51,6 +52,15 @@ export default function Home() {
             </span>
           </h2>
         </Link>
+
+        <form
+          action={async () => {
+            'use server';
+            await signIn('github');
+          }}
+        >
+          <button type="submit">Signin with GitHub</button>
+        </form>
       </div>
     </main>
   );
