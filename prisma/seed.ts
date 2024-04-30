@@ -75,7 +75,7 @@ const generatePosts = (
   for (let i = 0; i < count; i++) {
     posts.push({
       title: faker.lorem.words({ min: 3, max: 10 }),
-      content: faker.lorem.lines({ min: 1, max: 10 }),
+      description: faker.lorem.lines({ min: 1, max: 10 }),
       image: getImageName(),
       authorId,
     });
