@@ -23,9 +23,12 @@ export default async function Home() {
           )}
         </div>
         <span>{session.user.name}</span>
-        <a href={`mailto:${session.user.email}`} className="underline">
-          {session.user.email}
-        </a>
+        {session.user.email && (
+          <a href={`mailto:${session.user.email}`} className="underline">
+            {session.user.email}
+          </a>
+        )}
+        <pre>{JSON.stringify(session)}</pre>
       </div>
       <form
         action={async () => {
