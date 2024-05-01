@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { signIn } from '@/src/lib/auth';
+import { auth, signIn, signOut } from '@/src/lib/auth';
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
@@ -53,14 +55,53 @@ export default function Home() {
           </h2>
         </Link>
 
-        <form
-          action={async () => {
-            'use server';
-            await signIn('github');
-          }}
-        >
-          <button type="submit">Signin with GitHub</button>
-        </form>
+        {!session?.user ? (
+          <>
+            <form
+              action={async () => {
+                'use server';
+                await signIn('github');
+              }}
+            >
+              <button
+                type="submit"
+                className="rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+              >
+                Signin with GitHub
+              </button>
+            </form>
+
+            <form
+              action={async () => {
+                'use server';
+                await signIn('google');
+              }}
+            >
+              <button
+                type="submit"
+                className="rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+              >
+                Signin with Google
+              </button>
+            </form>
+          </>
+        ) : (
+          <>
+            <form
+              action={async () => {
+                'use server';
+                await signOut();
+              }}
+            >
+              <button
+                type="submit"
+                className="rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+              >
+                Logout
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </main>
   );
