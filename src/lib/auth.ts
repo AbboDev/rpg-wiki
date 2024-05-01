@@ -3,6 +3,7 @@ import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 import Reddit from 'next-auth/providers/reddit';
+import Twitter from 'next-auth/providers/twitter';
 
 import type { NextAuthConfig } from 'next-auth';
 
@@ -17,6 +18,7 @@ export const config = {
         },
       },
     }),
+    Twitter,
   ],
   basePath: '/auth',
   callbacks: {
