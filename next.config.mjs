@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.twimg.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**.fbcdn.net',
+      },
     ],
   },
 };
