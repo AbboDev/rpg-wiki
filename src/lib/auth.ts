@@ -5,6 +5,7 @@ import Google from 'next-auth/providers/google';
 import Reddit from 'next-auth/providers/reddit';
 import Twitter from 'next-auth/providers/twitter';
 import Facebook from 'next-auth/providers/facebook';
+import Discord from 'next-auth/providers/discord';
 
 import type { NextAuthConfig } from 'next-auth';
 
@@ -21,6 +22,7 @@ export const config = {
     }),
     Twitter,
     Facebook,
+    Discord,
   ],
   basePath: '/auth',
   callbacks: {

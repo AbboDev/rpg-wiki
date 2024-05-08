@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.fbcdn.net',
       },
+      {
+        protocol: 'https',
+        hostname: '**.discordapp.com',
+      },
     ],
   },
 };
