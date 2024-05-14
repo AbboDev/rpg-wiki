@@ -1,4 +1,6 @@
 import NextAuth from 'next-auth';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import prisma from '@/src/lib/prisma';
 
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
@@ -10,6 +12,7 @@ import Discord from 'next-auth/providers/discord';
 import type { NextAuthConfig } from 'next-auth';
 
 export const config = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GitHub,
     Google,
@@ -24,6 +27,13 @@ export const config = {
     Facebook,
     Discord,
   ],
+  // pages: {
+  //   signIn: '/auth/signin',
+  //   signOut: '/auth/signout',
+  //   error: '/auth/error',
+  //   verifyRequest: '/auth/verify-request',
+  //   newUser: '/auth/new-user'
+  // },
   basePath: '/auth',
   callbacks: {
     authorized({ request, auth }) {
