@@ -9,64 +9,67 @@ generator client {
 }
 
 model User {
+  // Auth.js required fields
   id            String    @id @default(cuid())
   name          String?   @db.VarChar(255)
   email         String?   @unique @db.VarChar(255)
   emailVerified DateTime?
-  image         String?   @db.Char(46) // SHA1 lenght of 40 + 1 char for dot + max 5 chars for extensions
+  image         String?
 
   posts      Post[]
   maps       Map[]
   characters Character[]
   markers    MapMarker[]
   worlds     World[]
+
+  // Auth.js required fields
   accounts   Account[]
   sessions   Session[]
 
   // Common Metadata
-  createdAt DateTime  @default(now()) @map(name: "created_at")
-  updatedAt DateTime  @updatedAt @map(name: "updated_at")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
-
-  @@map(name: "users")
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
-  oauth_token_secret String?
-  oauth_token        String?
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
-  userId             String  @map("user_id")
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique @map("session_token")
-  userId       String   @map("user_id")
+  id         Int      @id @default(autoincrement())
+  sessionToken String   @unique
   expires      DateTime
+  userId       String
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
-  id         Int      @id @default(autoincrement())
   identifier String
-  token      String   @unique
+  token      String
   expires    DateTime
 
-  @@unique([identifier, token])
+  @@id([identifier, token])
 }
 
 model Post {
