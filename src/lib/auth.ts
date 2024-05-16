@@ -41,10 +41,9 @@ export const config = {
       if (pathname === '/dashboard') return !!auth;
       return true;
     },
-    jwt({ token, trigger, session }) {
-      if (trigger === 'update') token.name = session.user.name;
-      return token;
-    },
+  },
+  session: {
+    strategy: 'database',
   },
 } satisfies NextAuthConfig;
 
